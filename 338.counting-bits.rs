@@ -7,9 +7,9 @@
 // @lc code=start
 impl Solution {
     pub fn count_bits(num: i32) -> Vec<i32> {
-        let mut x: Vec<i32> = Vec::with_capacity((num as usize) + 1);
-        for i in 0..num + 1 {
-            x.push(i.count_ones() as i32);
+        let mut x: Vec<i32> = vec![0; (num + 1) as usize];
+        for i in 1..num + 1 {
+            x[i as usize] = x[(i & (i - 1)) as usize] + 1;
         }
 
         x
