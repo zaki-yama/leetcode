@@ -1,13 +1,10 @@
-fn main() {
-    println!("{:}", Solution::h_index(vec![0]));
-    println!("{:}", Solution::h_index(vec![100]));
-    println!("{:}", Solution::h_index(vec![0, 1, 3, 5, 6]));
-    println!("{:}", Solution::h_index(vec![0, 1, 4, 5, 6]));
-    println!("{:}", Solution::h_index(vec![1, 2]));
-}
+/*
+ * @lc app=leetcode id=275 lang=rust
+ *
+ * [275] H-Index II
+ */
 
-struct Solution;
-
+// @lc code=start
 impl Solution {
     pub fn h_index(citations: Vec<i32>) -> i32 {
         let mut h_index = 0;
@@ -21,9 +18,9 @@ impl Solution {
         }
 
         for citation in citations.into_iter().rev() {
-            // println!("----------");
-            // println!("h_index: {:}", h_index);
-            // println!("cnt: {:} vs citation: {:}", cnt, citation);
+            println!("----------");
+            println!("h_index: {:}", h_index);
+            println!("cnt: {:} vs citation: {:}", cnt, citation);
             if citation < cnt as i32 {
                 break;
             }
@@ -33,3 +30,5 @@ impl Solution {
         cnt - 1
     }
 }
+
+// @lc code=end
