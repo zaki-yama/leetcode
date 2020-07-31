@@ -7,24 +7,14 @@
 // @lc code=start
 impl Solution {
     pub fn climb_stairs(n: i32) -> i32 {
-        let mut result = 0;
-        let mut k = 0;
-        while k <= n / 2 {
-            // for k in 0..n {
-            let digit = (n - 2 * k) + k;
-            println!("digit: {}", digit);
-            result += Solution::c(digit, k);
-            println!("result: {}", result);
-            k += 1;
-        }
-        result
-    }
-
-    fn c(n: i32, k: i32) -> i32 {
-        if k == 0 || k == n {
+        if n == 1 {
             return 1;
         }
-        Solution::c(n - 1, k - 1) * n / k
+        let mut dp = (1, 2);
+        for k in 3..=n {
+            dp = (dp.1, dp.0 + dp.1);
+        }
+        dp.1
     }
 }
 // @lc code=end
