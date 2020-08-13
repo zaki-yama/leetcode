@@ -1,36 +1,36 @@
 fn main() {
-    assert_eq!(true, Solution::is_power_of_four(16));
-    assert_eq!(false, Solution::is_power_of_four(8));
-    assert_eq!(false, Solution::is_power_of_four(5));
-    assert_eq!(true, Solution::is_power_of_four(4));
-    assert_eq!(false, Solution::is_power_of_four(3));
-    assert_eq!(false, Solution::is_power_of_four(2));
-    assert_eq!(true, Solution::is_power_of_four(1));
-    assert_eq!(false, Solution::is_power_of_four(0));
-    assert_eq!(true, Solution::is_power_of_four(268_435_456));
-    assert_eq!(false, Solution::is_power_of_four(17));
+    assert_eq!(vec![1], Solution::get_row(1));
+    assert_eq!(vec![1, 3, 3, 1], Solution::get_row(3));
+    assert_eq!(vec![1], Solution::get_row(5));
 }
 
 struct Solution;
 
 impl Solution {
-    pub fn is_power_of_four(num: i32) -> bool {
-        if num == 1 {
-            return true;
-        }
-        let mut a = num;
-        let mut amari = 1;
-        loop {
-            println!("{}", a);
-            if a < 4 {
-                break;
+    pub fn get_row(row_index: i32) -> Vec<i32> {
+        let mut triangle: Vec<Vec<i32>> = Vec::new();
+        triangle.push(vec![1]);
+        for i in 1..=row_index {
+            let mut row: Vec<i32> = Vec::new();
+            let prev_row = triangle.get((i - 1) as usize);
+            for j in 0..=i {
+                println!("({}, {})", i, j);
+                match prev_row {
+                    Some(v) => {
+                        let a = v.get((j - 1) as usize).unwrap_or(&0);
+                        let b = v.get(j as usize).unwrap_or(&0);
+                        println!("({}, {}): {}", i, j, a + b);
+                        row.push(a + b);
+                    }
+                    None => {
+                        row.push(0);
+                    }
+                }
             }
-            amari = a % 4;
-            if amari != 0 {
-                return false;
-            }
-            a /= 4;
+            println!("{:?}", row);
+            triangle.push(row);
         }
-        amari == 0 && a == 1
+        println!("{:?}", triangle);
+        triangle[(row_index) as usize].clone()
     }
 }
