@@ -28,16 +28,19 @@ function deleteDuplicates(head: ListNode | null): ListNode | null {
   let cursor = head;
 
   while (cursor) {
-    while (cursor.next && cursor.val === cursor.next.val) {
-      cursor = cursor.next;
-    }
+    // if it's a beginning of duplicates sublist
+    // skip all duplicates
+    if (cursor.next && cursor.val === cursor.next.val) {
+      while (cursor.next && cursor.val === cursor.next.val) {
+        cursor = cursor.next;
+      }
+      pre.next = cursor.next;
 
-    if (pre.next === cursor) {
+    // otherwise, move predecessor
+    } else {
       pre = pre.next;
     }
-    else {
-      pre.next = cursor.next;
-    }
+
     cursor = cursor.next;
   }
   return fakeHead.next;
