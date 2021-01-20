@@ -1,36 +1,38 @@
+#[test]
+fn test() {
+    assert_eq!(true, Solution::halves_are_alike(String::from("book")));
+    assert_eq!(false, Solution::halves_are_alike(String::from("textbook")));
+    assert_eq!(
+        false,
+        Solution::halves_are_alike(String::from("MerryChristmas"))
+    );
+    assert_eq!(true, Solution::halves_are_alike(String::from("AbCdEfGh")));
+}
+
 fn main() {
-    assert_eq!(true, Solution::is_power_of_four(16));
-    assert_eq!(false, Solution::is_power_of_four(8));
-    assert_eq!(false, Solution::is_power_of_four(5));
-    assert_eq!(true, Solution::is_power_of_four(4));
-    assert_eq!(false, Solution::is_power_of_four(3));
-    assert_eq!(false, Solution::is_power_of_four(2));
-    assert_eq!(true, Solution::is_power_of_four(1));
-    assert_eq!(false, Solution::is_power_of_four(0));
-    assert_eq!(true, Solution::is_power_of_four(268_435_456));
-    assert_eq!(false, Solution::is_power_of_four(17));
+    // println!("{}", Solution::halves_are_alike(String::from(raw_str)));
 }
 
 struct Solution;
 
 impl Solution {
-    pub fn is_power_of_four(num: i32) -> bool {
-        if num == 1 {
-            return true;
-        }
-        let mut a = num;
-        let mut amari = 1;
-        loop {
-            println!("{}", a);
-            if a < 4 {
-                break;
-            }
-            amari = a % 4;
-            if amari != 0 {
-                return false;
-            }
-            a /= 4;
-        }
-        amari == 0 && a == 1
+    pub fn halves_are_alike(s: String) -> bool {
+        let (a, b) = s.split_at(s.as_bytes().len() / 2);
+        let a_count = Solution::count_vowel(a);
+        let b_count = Solution::count_vowel(b);
+        println!("({}, {}) = ({}, {})", a, b, a_count, b_count);
+        a_count == b_count
+    }
+
+    pub fn count_vowel(s: &str) -> usize {
+        s.as_bytes()
+            .iter()
+            .filter(|ch| match ch {
+                b'a' | b'A' | b'i' | b'I' | b'u' | b'U' | b'e' | b'E' | b'o' | b'O' => {
+                    return true;
+                }
+                _ => false,
+            })
+            .count()
     }
 }
