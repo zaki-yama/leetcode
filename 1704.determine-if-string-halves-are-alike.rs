@@ -1,26 +1,16 @@
-#[test]
-fn test() {
-    assert_eq!(true, Solution::halves_are_alike(String::from("book")));
-    assert_eq!(false, Solution::halves_are_alike(String::from("textbook")));
-    assert_eq!(
-        false,
-        Solution::halves_are_alike(String::from("MerryChristmas"))
-    );
-    assert_eq!(true, Solution::halves_are_alike(String::from("AbCdEfGh")));
-}
+/*
+ * @lc app=leetcode id=1704 lang=rust
+ *
+ * [1704] Determine if String Halves Are Alike
+ */
 
-fn main() {
-    // println!("{}", Solution::halves_are_alike(String::from(raw_str)));
-}
-
-struct Solution;
-
+// @lc code=start
 impl Solution {
     pub fn halves_are_alike(s: String) -> bool {
         let (a, b) = s.split_at(s.as_bytes().len() / 2);
         let a_count = Solution::count_vowel(a);
         let b_count = Solution::count_vowel(b);
-        println!("({}, {}) = ({}, {})", a, b, a_count, b_count);
+
         a_count == b_count
     }
 
@@ -36,3 +26,4 @@ impl Solution {
             .count()
     }
 }
+// @lc code=end
