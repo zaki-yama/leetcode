@@ -8,35 +8,25 @@
 impl Solution {
     pub fn shortest_to_char(s: String, c: char) -> Vec<i32> {
         let mut ans: Vec<i32> = Vec::new();
+        let mut prev = std::i32::MIN / 2;
         for (i, char) in s.chars().enumerate() {
+            println!("{}: {}", i, char);
             if char == c {
-                ans.push(0);
-                continue;
+                prev = i as i32;
             }
+            ans.push(i as i32 - prev);
+            println!("{}", ans[i]);
+        }
 
-            // search left
-            let mut cur: i32 = i as i32;
-            let mut left = std::i32::MAX;
-            while cur >= 0 {
-                if s.chars().nth(cur as usize).unwrap() == c {
-                    left = (i as i32) - (cur as i32);
-                    break;
-                }
-                cur -= 1;
+        prev = std::i32::MAX / 2;
+        for (i, char) in s.chars().rev().enumerate() {
+            println!("{}: {}", i, char);
+            let j = s.len() - i - 1;
+            if char == c {
+                prev = j as i32;
             }
-
-            // search right
-            cur = i as i32;
-            let mut right = std::i32::MAX;
-            while cur < s.len() as i32 {
-                if s.chars().nth(cur as usize).unwrap() == c {
-                    right = (cur as i32) - (i as i32);
-                    break;
-                }
-                cur += 1;
-            }
-
-            ans.push(left.min(right));
+            ans[j] = ans[j].min(prev - j as i32);
+            println!("{}", ans[j]);
         }
         ans
     }
