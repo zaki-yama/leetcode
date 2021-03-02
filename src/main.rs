@@ -1,11 +1,7 @@
 #[test]
 fn test() {
-    assert_eq!(5, Solution::num_trees(3));
-    assert_eq!(1, Solution::num_trees(1));
-    // ref. https://en.wikipedia.org/wiki/Catalan_number
-    assert_eq!(14, Solution::num_trees(4));
-    assert_eq!(42, Solution::num_trees(5));
-    assert_eq!(16796, Solution::num_trees(10));
+    assert_eq!(5, Solution::max_profit(vec![7, 1, 5, 3, 6, 4]));
+    assert_eq!(0, Solution::max_profit(vec![7, 6, 4, 3, 1]));
 }
 
 fn main() {
@@ -13,18 +9,22 @@ fn main() {
 }
 
 struct Solution;
+use std::cmp;
 
 impl Solution {
-    pub fn num_trees(n: i32) -> i32 {
-        let mut dp: Vec<i32> = vec![0; (n + 1) as usize];
-        dp[0] = 1;
-        dp[1] = 1;
+    pub fn max_profit(prices: Vec<i32>) -> i32 {
+        let mut min_price = std::i32::MAX;
 
-        for k in 2..=n {
-            for i in 0..k {
-                dp[k as usize] += dp[i as usize] * dp[(k - i - 1) as usize];
+        let mut dp = vec![0; prices.len() + 1];
+        dp[0] = 0;
+        for i in 1..=prices.len() {
+            let price = prices[i - 1];
+            println!("[{}] {}", i, price);
+            if price < min_price {
+                min_price = prices[i - 1];
             }
+            dp[i] = cmp::max(dp[i - 1], price - min_price);
         }
-        dp[n as usize]
+        dp[prices.len()]
     }
 }
