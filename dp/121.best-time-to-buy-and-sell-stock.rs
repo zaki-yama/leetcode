@@ -1,14 +1,10 @@
-#[test]
-fn test() {
-    assert_eq!(5, Solution::max_profit(vec![7, 1, 5, 3, 6, 4]));
-    assert_eq!(0, Solution::max_profit(vec![7, 6, 4, 3, 1]));
-}
+/*
+ * @lc app=leetcode id=121 lang=rust
+ *
+ * [121] Best Time to Buy and Sell Stock
+ */
 
-fn main() {
-    // println!("{}", Solution::halves_are_alike(String::from(raw_str)));
-}
-
-struct Solution;
+// @lc code=start
 use std::cmp;
 
 impl Solution {
@@ -19,7 +15,6 @@ impl Solution {
         dp[0] = 0;
         for i in 1..=prices.len() {
             let price = prices[i - 1];
-            println!("[{}] {}", i, price);
             if price < min_price {
                 min_price = prices[i - 1];
             }
@@ -28,3 +23,4 @@ impl Solution {
         dp[prices.len()]
     }
 }
+// @lc code=end
