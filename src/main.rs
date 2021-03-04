@@ -1,7 +1,11 @@
 #[test]
 fn test() {
-    assert_eq!(5, Solution::max_profit(vec![7, 1, 5, 3, 6, 4]));
-    assert_eq!(0, Solution::max_profit(vec![7, 6, 4, 3, 1]));
+    assert_eq!(4, Solution::rob(vec![1, 2, 3, 1]));
+    assert_eq!(12, Solution::rob(vec![2, 7, 9, 3, 1]));
+    assert_eq!(104, Solution::rob(vec![1, 2, 3, 1, 1, 100, 4]));
+    assert_eq!(0, Solution::rob(vec![]));
+    assert_eq!(1, Solution::rob(vec![1, 1]));
+    assert_eq!(1, Solution::rob(vec![1]));
 }
 
 fn main() {
@@ -12,19 +16,20 @@ struct Solution;
 use std::cmp;
 
 impl Solution {
-    pub fn max_profit(prices: Vec<i32>) -> i32 {
-        let mut min_price = std::i32::MAX;
-
-        let mut dp = vec![0; prices.len() + 1];
-        dp[0] = 0;
-        for i in 1..=prices.len() {
-            let price = prices[i - 1];
-            println!("[{}] {}", i, price);
-            if price < min_price {
-                min_price = prices[i - 1];
-            }
-            dp[i] = cmp::max(dp[i - 1], price - min_price);
+    pub fn rob(nums: Vec<i32>) -> i32 {
+        if nums.len() == 0 {
+            return 0;
         }
-        dp[prices.len()]
+        let mut dp = vec![0; nums.len() + 1];
+
+        dp[0] = 0;
+        dp[1] = nums[0];
+
+        for i in 1..nums.len() {
+            println!("[{}] {}", i, nums[i]);
+            dp[i + 1] = cmp::max(dp[i - 1] + nums[i], dp[i]);
+        }
+        println!("dp: {:?}", dp);
+        dp[nums.len()]
     }
 }
